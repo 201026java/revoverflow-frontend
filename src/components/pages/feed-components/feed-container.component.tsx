@@ -80,10 +80,12 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
 
     const handleQuestionTypeChange = (e: string) => {
         setQuestionType(e);
+        console.log(questionType);
     }
 
     const handleLocationChange = (e: string) => {
         setLocation(e);
+        console.log(location);
     }
 
     /**

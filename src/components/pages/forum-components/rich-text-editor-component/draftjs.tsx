@@ -121,10 +121,12 @@ export const RichTextEditorComponent: React.FC = () => {
 
     const handleQuestionTypeChange = (e: string) => {
         setQuestionType(e);
+        console.log(questionType);
     }
 
     const handleLocationChange = (e: string) => {
         setLocation(e);
+        console.log(location);
     }
     
     //INLINE and BLOCK LEVEL styles, consists of these functions and an array of buttons to map to span button elements
