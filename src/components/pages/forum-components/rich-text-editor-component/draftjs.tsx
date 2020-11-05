@@ -9,7 +9,7 @@ import React from 'react';
 import { useState } from 'react';
 import { Editor, EditorState, RichUtils, convertToRaw } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import { Button, createMuiTheme, makeStyles, ThemeProvider, Box, Container, Typography, FormControl, InputBase } from '@material-ui/core';
+import { Button, createMuiTheme, makeStyles, ThemeProvider, Box, Container, Typography, FormControl, InputBase, InputLabel, Select, MenuItem} from '@material-ui/core';
 import FormatBoldIcon from '@material-ui/icons/FormatBold';
 import HttpIcon from '@material-ui/icons/Http';
 import FormatItalicIcon from '@material-ui/icons/FormatItalic';
@@ -69,6 +69,16 @@ const useStyles = makeStyles({
     font: {
         fontSize: 25,
         paddingLeft: 10
+    },
+    dropDownBox: {
+        display: "flex",
+        justifyContent: "flex-start",
+        marginTop: 10,
+        marginBottom: 10,
+    },
+    dropDown: {
+        minWidth: 150,
+        margin: 5
     }
 });
 
@@ -83,6 +93,8 @@ export const RichTextEditorComponent: React.FC = () => {
     const classes = useStyles();
     const history = useHistory();
     const [title, setTitle] = useState('');
+    const [questionType, setQuestionType] = useState('');
+    const [location, setLocation] = useState('');
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const onChange = (editorState: EditorState) => setEditorState(editorState);
     const handleKeyCommand = (command: string, editorState: EditorState) => {
@@ -107,6 +119,14 @@ export const RichTextEditorComponent: React.FC = () => {
         await questionRemote.postQuestion(payload);
         history.push("/feed");
         window.location.reload(false);
+    }
+
+    const handleQuestionTypeChange = (e: any) => {
+        setQuestionType(e.target.value);
+    }
+
+    const handleLocationChange = (e: any) => {
+        setLocation(e.target.value);
     }
 
     //INLINE and BLOCK LEVEL styles, consists of these functions and an array of buttons to map to span button elements
@@ -224,13 +244,13 @@ export const RichTextEditorComponent: React.FC = () => {
                     <Box justifyContent="flex-start" display="flex" padding={3} >
                         <Typography variant="h4" >
                             Ask a Question:
-                    </Typography>
+                        </Typography>
                     </Box>
-                    <Box display="flex" flexDirection="column" paddingBottom={3}>
+                    <Box display="flex" flexDirection="column">
                         <Box display="flex">
                             <Typography variant="h5" >
                                 Title:
-                    </Typography>
+                            </Typography>
                         </Box>
                         <Box display="flex" className={classes.titleTool}>
                             <FormControl fullWidth variant="outlined"   >
@@ -240,12 +260,27 @@ export const RichTextEditorComponent: React.FC = () => {
                             </FormControl>
                         </Box>
                     </Box>
+                    <Box className={classes.dropDownBox}>
+                        <FormControl className={classes.dropDown}>
+                            <InputLabel id="question-type-label">Question Type</InputLabel>
+                            <Select labelId="question-type-label" id="question-type" value={questionType} onChange={(e: any) => handleQuestionTypeChange(e)}>
+                                <MenuItem value={"Reavture"}>Revature</MenuItem>
+                                <MenuItem value={"Location"}>Location</MenuItem>
+                            </Select>
+                        </FormControl>
+                        <FormControl className={classes.dropDown}>
+                            <InputLabel id="location-label">Location</InputLabel>
+                            <Select labelId="location-label" id="location" value={location} onChange={(e: any) => handleLocationChange(e)}>
+                                <MenuItem value={"UTA"}>UTA</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Box>
                     <Box>
                         <Box justifyContent="center" display="flex" flexDirection="column">
                             <Box justifyContent="flex-start" display="flex" >
                                 <Typography variant="h5">
                                     Content:
-                            </Typography>
+                                </Typography>
                             </Box>
                             <Box justifyContent="flex-start" display="flex" flexWrap="wrap">
                                 {buttons.map(b =>
