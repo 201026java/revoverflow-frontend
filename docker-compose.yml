@@ -1,0 +1,19 @@
+version: '3.1'
+
+services:
+     revoverflow-frontend:
+         image: 'revoverflow-frontend:latest'
+         build:
+             context: .
+             dockerfile: Dockerfile
+         volumes:
+             - '.:/app'
+             - '/app/node_modules'
+             - '/app/build'
+             - '/usr/share/nginx/html'
+             - '/var/log/nginx'
+             - '/etc/nginx'
+         ports:
+             - '3000:80'
+         environment:
+             - ALLOW_ANONYMOUS_LOGIN=true
