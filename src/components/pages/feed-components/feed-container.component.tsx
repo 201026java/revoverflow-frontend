@@ -3,7 +3,8 @@
  * @author Keith Salzman 
  */
 
-import React, { useState } from 'react';
+//TODO:Refresh the list of questions everytime you change the filter so some sort of useEffect to call Load again but has to know the view
+import React, { useEffect, useState } from 'react';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { Container, createMuiTheme, ThemeProvider, Box, Button, makeStyles} from '@material-ui/core';
@@ -70,12 +71,16 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
     const size = 10;
     let filteredQuestions: Question[] = [];
 
+    useEffect(() => {
+        load(view, 0, questionType, location);
+    }, [questionType, location]);
+
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue);
     };
 
     const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
-        load(view, value - 1);
+        load(view, value - 1, questionType, location);
     };
 
     const handleQuestionTypeChange = (e: string) => {
@@ -93,35 +98,59 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
      * @param view string variable that dictates what is displayed in the rendered feed box components
      * @param page number variable that describes which page to display form the paginated information recieved from the server
      */
-    const load = async (view: string, page: number) => {
+    const load = async (view: string, page: number, questionType: string, location: string) => {
         let retrievedPageable: any;
         let tab: any;
-        if (view === 'recent') {
-            retrievedPageable = await questionRemote.getAllQuestions(size, page);
-            tab = 0;
-            setView(view);
-            if (retrievedPageable.numberOfElements === 0) {
-                return;
-            }
-        } else if (view === 'question') {
-            retrievedPageable = await questionRemote.getQuestionsByUserId(userId, size, page);
-            tab = 1;
-            setView(view)
-        } else if (view === 'answer') {
-            retrievedPageable = await answerRemote.getAnswersByUserId(userId, size, page);
-            tab = 2;
-            setView(view)
-        } else if (view === 'confirm') {
-            retrievedPageable = await questionRemote.getUnconfirmedQuestions(size, page);
-            tab = 3;
-            setView(view)
-        }
 
+        if(questionType === '' && location === '' ) {
+            if (view === 'recent') {
+                retrievedPageable = await questionRemote.getAllQuestions(size, page);
+                tab = 0;
+                setView(view);
+                if (retrievedPageable.numberOfElements === 0) {
+                    return;
+                }
+            } else if (view === 'question') {
+                retrievedPageable = await questionRemote.getQuestionsByUserId(userId, size, page);
+                tab = 1;
+                setView(view)
+            } else if (view === 'answer') {
+                retrievedPageable = await answerRemote.getAnswersByUserId(userId, size, page);
+                tab = 2;
+                setView(view)
+            } else if (view === 'confirm') {
+                retrievedPageable = await questionRemote.getUnconfirmedQuestions(size, page);
+                tab = 3;
+                setView(view)
+            }
+        }
+        else{
+            if (view === 'recent') {
+                retrievedPageable = await questionRemote.getAllFilteredQuestions(size, page, questionType, location);
+                tab = 0;
+                setView(view);
+                if (retrievedPageable.numberOfElements === 0) {
+                    return;
+                }
+            } else if (view === 'question') {
+                retrievedPageable = await questionRemote.getFilteredQuestionsByUserId(userId, size, page, questionType, location);
+                tab = 1;
+                setView(view)
+            } else if (view === 'answer') {
+                retrievedPageable = await answerRemote.getFilteredAnswersByUserId(userId, size, page, questionType, location);
+                tab = 2;
+                setView(view)
+            } else if (view === 'confirm') {
+                retrievedPageable = await questionRemote.getFilteredUnconfirmedQuestions(size, page, questionType, location);
+                tab = 3;
+                setView(view)
+            }
+        }
         props.clickTab(retrievedPageable.content, tab, retrievedPageable.totalPages, retrievedPageable.number);
     }
 
     if (props.storeQuestions.length === 0 && view === 'recent') {
-        load("recent", 0);
+        load("recent", 0, questionType, location);
     }
 
     /**
@@ -173,12 +202,12 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
                             onChange={handleChange}
                         >
                             <Tab icon={<DynamicFeedOutlinedIcon fontSize="large" />} label="RECENT" className={classes.boxInternal}
-                                onClick={(e) => load("recent", 0)} />
+                                onClick={(e) => load("recent", 0, questionType, location)} />
                             <Tab icon={<LiveHelpIcon fontSize="large" />} label="MY QUESTIONS" className={classes.boxInternal}
-                                onClick={(e) => load("question", 0)} />
+                                onClick={(e) => load("question", 0, questionType, location)} />
                             <Tab icon={<QuestionAnswerIcon fontSize="large" />} label="MY ANSWERS" className={classes.boxInternal}
-                                onClick={(e) => load("answer", 0)} />
-                            {admin === 'true' ? <Tab icon={<ConfirmationNumberOutlinedIcon fontSize="large" onClick={(e) => load("confirm", 0)} />}
+                                onClick={(e) => load("answer", 0, questionType, location)} />
+                            {admin === 'true' ? <Tab icon={<ConfirmationNumberOutlinedIcon fontSize="large" onClick={(e) => load("confirm", 0, questionType, location)} />}
                                 label="CONFIRM" className={classes.boxInternal} /> : ""}
                         </Tabs>
                     </Box>

@@ -22,3 +22,7 @@ export const getAnswersByQuestionId = async (id: number, size: number, page: num
     return response.data;
 }
 
+export const getFilteredAnswersByUserId = async (id: number, size: number, page: number, questionType: string, location: string) => {
+    const response = await authAxios.get<Question[]>(`/answers/user/${id}?size=${size}&page=${page}&questionType=${questionType}&location=${location}`);
+    return response.data;
+}
