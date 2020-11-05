@@ -6,7 +6,7 @@
 import React, { useState } from 'react';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { Container, createMuiTheme, ThemeProvider, Box, Button, makeStyles } from '@material-ui/core';
+import { Container, createMuiTheme, ThemeProvider, Box, Button, makeStyles} from '@material-ui/core';
 import FeedBoxComponent from './feed-box.component';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import DynamicFeedOutlinedIcon from '@material-ui/icons/DynamicFeedOutlined';
@@ -21,6 +21,7 @@ import { IState } from '../../../reducers';
 import { connect } from 'react-redux';
 import { clickTab } from '../../../actions/question.actions';
 import LiveHelpIcon from '@material-ui/icons/LiveHelp';
+import { FilterDropDown } from '../../common/filter-drop-down.component';
 
 const theme = createMuiTheme({
     palette: {
@@ -46,7 +47,7 @@ const useStyles = makeStyles({
     breadcrumbBar: {
         marginTop: 60,
         marginLeft: 20,
-    }
+    },
 });
 
 export interface FeedContainerComponentProps {
@@ -62,6 +63,8 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
     const history = useHistory();
     const [view, setView] = useState<'question' | 'answer' | 'confirm' | 'recent'>('recent');
     const [value, setValue] = React.useState(props.storeTab);
+    const [questionType, setQuestionType] = useState('');
+    const [location, setLocation] = useState('');
     const userId = (+JSON.parse(JSON.stringify(localStorage.getItem('userId'))));
     const admin = (localStorage.getItem("admin"));
     const size = 10;
@@ -74,6 +77,14 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
     const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
         load(view, value - 1);
     };
+
+    const handleQuestionTypeChange = (e: string) => {
+        setQuestionType(e);
+    }
+
+    const handleLocationChange = (e: string) => {
+        setLocation(e);
+    }
 
     /**
      * Populates the feed with answers or questions according to the particular view and page input. 
@@ -143,8 +154,11 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
                     <ThemeProvider theme={theme} >
                         <Button variant="contained" color="secondary" onClick={() => handleRedirect()}>
                             Ask a Question
-                    </Button>
+                        </Button>
                     </ThemeProvider>
+                </Box>
+                <Box>
+                    <FilterDropDown questionType={(e:string) => handleLocationChange(e)} location={(e:string) => handleQuestionTypeChange(e)}/>
                 </Box>
                 <ThemeProvider theme={theme} >
                     <Box justifyContent="center" display="flex" className={classes.boxExternal}>

@@ -9,7 +9,7 @@ import React from 'react';
 import { useState } from 'react';
 import { Editor, EditorState, RichUtils, convertToRaw } from 'draft-js';
 import 'draft-js/dist/Draft.css';
-import { Button, createMuiTheme, makeStyles, ThemeProvider, Box, Container, Typography, FormControl, InputBase, InputLabel, Select, MenuItem} from '@material-ui/core';
+import { Button, createMuiTheme, makeStyles, ThemeProvider, Box, Container, Typography, FormControl, InputBase} from '@material-ui/core';
 import FormatBoldIcon from '@material-ui/icons/FormatBold';
 import HttpIcon from '@material-ui/icons/Http';
 import FormatItalicIcon from '@material-ui/icons/FormatItalic';
@@ -21,6 +21,7 @@ import FormatListNumberedIcon from '@material-ui/icons/FormatListNumbered';
 import * as questionRemote from '../../../../remotes/question.remote';
 import { useHistory } from 'react-router';
 import { BreadcrumbBarComponent } from '../../breadcrumb-bar.component';
+import { FilterDropDown } from '../../../common/filter-drop-down.component';
 
 
 const theme = createMuiTheme({
@@ -75,10 +76,6 @@ const useStyles = makeStyles({
         justifyContent: "flex-start",
         marginTop: 10,
         marginBottom: 10,
-    },
-    dropDown: {
-        minWidth: 150,
-        margin: 5
     }
 });
 
@@ -95,7 +92,6 @@ export const RichTextEditorComponent: React.FC = () => {
     const [title, setTitle] = useState('');
     const [questionType, setQuestionType] = useState('');
     const [location, setLocation] = useState('');
-    const [locationForm, setLocationForm] = useState(false);
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const onChange = (editorState: EditorState) => setEditorState(editorState);
     const handleKeyCommand = (command: string, editorState: EditorState) => {
@@ -123,22 +119,14 @@ export const RichTextEditorComponent: React.FC = () => {
         window.location.reload(false);
     }
 
-    const handleQuestionTypeChange = (e: any) => {
-        setQuestionType(e.target.value);
-        handleLocationForm(e.target.value);
+    const handleQuestionTypeChange = (e: string) => {
+        setQuestionType(e);
     }
 
-    const handleLocationChange = (e: any) => {
-        setLocation(e.target.value);
+    const handleLocationChange = (e: string) => {
+        setLocation(e);
     }
-
-    const handleLocationForm = (e: any) => {
-        if(e === 'Location')
-            setLocationForm(true);
-        else
-            setLocationForm(false);
-    }
-
+    
     //INLINE and BLOCK LEVEL styles, consists of these functions and an array of buttons to map to span button elements
     const buttonVariant = (name: string) => {
         const currentInLineStyle = editorState.getCurrentInlineStyle();
@@ -246,17 +234,6 @@ export const RichTextEditorComponent: React.FC = () => {
         { function: onHead3Click, name: 'H3', block: 'header-three' }]
     const linkbutton = [{ function: onAddLink, name: <HttpIcon /> }]
 
-    const LocationForm = () => {
-        return(
-            <FormControl className={classes.dropDown}>
-                <InputLabel id="location-label">Location</InputLabel>
-                <Select labelId="location-label" id="location" value={location} onChange={(e: any) => handleLocationChange(e)}>
-                    <MenuItem value={"UTA"}>UTA</MenuItem>
-                </Select>
-            </FormControl>
-        )
-    }
-
     return (
         <div className={classes.breadcrumbBar}>
             <BreadcrumbBarComponent />
@@ -282,14 +259,7 @@ export const RichTextEditorComponent: React.FC = () => {
                         </Box>
                     </Box>
                     <Box className={classes.dropDownBox}>
-                        <FormControl className={classes.dropDown}>
-                            <InputLabel id="question-type-label">Question Type</InputLabel>
-                            <Select labelId="question-type-label" id="question-type" value={questionType} onChange={(e: any) => handleQuestionTypeChange(e)}>
-                                <MenuItem value={"Revature"}>Revature</MenuItem>
-                                <MenuItem value={"Location"}>Location</MenuItem>
-                            </Select>
-                        </FormControl>
-                        {locationForm ? <LocationForm /> : null}
+                        <FilterDropDown questionType={(e:string) => handleLocationChange(e)} location={(e:string) => handleQuestionTypeChange(e)}/>
                     </Box>
                     <Box>
                         <Box justifyContent="center" display="flex" flexDirection="column">
