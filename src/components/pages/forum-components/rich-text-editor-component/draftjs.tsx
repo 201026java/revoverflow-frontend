@@ -95,6 +95,7 @@ export const RichTextEditorComponent: React.FC = () => {
     const [title, setTitle] = useState('');
     const [questionType, setQuestionType] = useState('');
     const [location, setLocation] = useState('');
+    const [locationForm, setLocationForm] = useState(false);
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const onChange = (editorState: EditorState) => setEditorState(editorState);
     const handleKeyCommand = (command: string, editorState: EditorState) => {
@@ -107,6 +108,7 @@ export const RichTextEditorComponent: React.FC = () => {
         }
     }
 
+    //TODO: Send question type and location
     const saveQuestion = async () => {
         const contentState = editorState.getCurrentContent();
         const payload: any = {
@@ -123,10 +125,18 @@ export const RichTextEditorComponent: React.FC = () => {
 
     const handleQuestionTypeChange = (e: any) => {
         setQuestionType(e.target.value);
+        handleLocationForm(e.target.value);
     }
 
     const handleLocationChange = (e: any) => {
         setLocation(e.target.value);
+    }
+
+    const handleLocationForm = (e: any) => {
+        if(e === 'Location')
+            setLocationForm(true);
+        else
+            setLocationForm(false);
     }
 
     //INLINE and BLOCK LEVEL styles, consists of these functions and an array of buttons to map to span button elements
@@ -236,6 +246,17 @@ export const RichTextEditorComponent: React.FC = () => {
         { function: onHead3Click, name: 'H3', block: 'header-three' }]
     const linkbutton = [{ function: onAddLink, name: <HttpIcon /> }]
 
+    const LocationForm = () => {
+        return(
+            <FormControl className={classes.dropDown}>
+                <InputLabel id="location-label">Location</InputLabel>
+                <Select labelId="location-label" id="location" value={location} onChange={(e: any) => handleLocationChange(e)}>
+                    <MenuItem value={"UTA"}>UTA</MenuItem>
+                </Select>
+            </FormControl>
+        )
+    }
+
     return (
         <div className={classes.breadcrumbBar}>
             <BreadcrumbBarComponent />
@@ -264,16 +285,11 @@ export const RichTextEditorComponent: React.FC = () => {
                         <FormControl className={classes.dropDown}>
                             <InputLabel id="question-type-label">Question Type</InputLabel>
                             <Select labelId="question-type-label" id="question-type" value={questionType} onChange={(e: any) => handleQuestionTypeChange(e)}>
-                                <MenuItem value={"Reavture"}>Revature</MenuItem>
+                                <MenuItem value={"Revature"}>Revature</MenuItem>
                                 <MenuItem value={"Location"}>Location</MenuItem>
                             </Select>
                         </FormControl>
-                        <FormControl className={classes.dropDown}>
-                            <InputLabel id="location-label">Location</InputLabel>
-                            <Select labelId="location-label" id="location" value={location} onChange={(e: any) => handleLocationChange(e)}>
-                                <MenuItem value={"UTA"}>UTA</MenuItem>
-                            </Select>
-                        </FormControl>
+                        {locationForm ? <LocationForm /> : null}
                     </Box>
                     <Box>
                         <Box justifyContent="center" display="flex" flexDirection="column">
