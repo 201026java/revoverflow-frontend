@@ -40,6 +40,11 @@ export const getQuestionByQuestionId = async (id: number) => {
     return response.data;
 }
 
+export const getAllFilteredQuestions = async (size: number, page: number, questionType: string, location: string) => {
+    const response = await authAxios.get<any>(`/questions?&size=${size}&page=${page}&questionType=${questionType}&location=${location}`)
+    return response.data;
+}
+
 export const updateQuestionAcceptedAnswerId = async (questionAcceptedAnswerId: Question) => {
     const response = await authAxios.put<Question>(`/questions`, questionAcceptedAnswerId);
     return response;
