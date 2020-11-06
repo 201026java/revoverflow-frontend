@@ -71,9 +71,10 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
     const size = 10;
     let filteredQuestions: Question[] = [];
 
-    useEffect(() => {
-        load(view, 0, questionType, location);
-    }, [questionType, location]);
+    // useEffect(() => {
+    //     load(view, 0, questionType, location);
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [questionType, location]);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue);
@@ -85,13 +86,13 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
 
     const handleQuestionTypeChange = (e: string) => {
         setQuestionType(e);
-        console.log(questionType);
     }
+    console.log(questionType);
 
     const handleLocationChange = (e: string) => {
         setLocation(e);
-        console.log(location);
     }
+    console.log(location);
 
     /**
      * Populates the feed with answers or questions according to the particular view and page input. 
