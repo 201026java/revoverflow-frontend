@@ -31,6 +31,8 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
+import RoomIcon from '@material-ui/icons/Room';
+import ApartmentIcon from '@material-ui/icons/Apartment';
 import LiveHelpIcon from "@material-ui/icons/LiveHelp";
 import { useHistory } from "react-router";
 import { Menu, MenuItem, Box } from "@material-ui/core";
@@ -339,6 +341,48 @@ export const NavbarComponent: React.FC = () => {
                 <QuestionAnswerIcon
                   onClick={() => {
                     history.push("/question");
+                  }}
+                  style={{ color: "#F26925" }}
+                />
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+          <Divider />
+          {["Revature Specific Questions"].map((text, index) => (
+            <ListItem
+              onClick={() => {
+                history.push("/revature");
+              }}
+              style={{ color: "#F26925" }}
+              button
+              key={text}
+            >
+              <ListItemIcon>
+                <ApartmentIcon
+                  onClick={() => {
+                    history.push("/revature");
+                  }}
+                  style={{ color: "#F26925" }}
+                />
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+          <Divider />
+          {["Location Specific Questions"].map((text, index) => (
+            <ListItem
+              onClick={() => {
+                history.push("/location");
+              }}
+              style={{ color: "#F26925" }}
+              button
+              key={text}
+            >
+              <ListItemIcon>
+                <RoomIcon
+                  onClick={() => {
+                    history.push("/location");
                   }}
                   style={{ color: "#F26925" }}
                 />
