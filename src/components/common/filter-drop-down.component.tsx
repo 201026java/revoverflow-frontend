@@ -1,10 +1,12 @@
 import { Box, FormControl, InputLabel, makeStyles, MenuItem, Select } from '@material-ui/core';
 import React, { useState } from 'react';
+import { LocationFilterDropDown } from './location-filter-drop-down.component';
 
 const useStyles = makeStyles({
     dropDown: {
         minWidth: 150,
-        margin: 5
+        marginLeft: 5,
+        marginRight: 5
     }
 });
 
@@ -16,7 +18,6 @@ export interface FilterDropDownComponentProps {
 export const FilterDropDown: React.FC<FilterDropDownComponentProps> = (props) => {
     const classes = useStyles();
     const [questionType, setQuestionType] = useState('');
-    const [location, setLocation] = useState('');
     const [locationForm, setLocationForm] = useState(false);
 
     const handleQuestionTypeChange = (e: any) => {
@@ -25,28 +26,18 @@ export const FilterDropDown: React.FC<FilterDropDownComponentProps> = (props) =>
         handleLocationForm(e.target.value);
     }
 
-    const handleLocationChange = (e: any) => {
-        setLocation(e.target.value);
-        props.location(e.target.value);
+    const handleLocationChange = (e: string) => {
+        props.location(e);
     }
 
     const handleLocationForm = (e: any) => {
         if(e === 'Location')
             setLocationForm(true);
-        else
+        else{
             setLocationForm(false);
-    }
-
-    const LocationForm = () => {
-        return(
-            <FormControl className={classes.dropDown}>
-                <InputLabel id="location-label">Location</InputLabel>
-                <Select labelId="location-label" id="location" value={location} onChange={(e: any) => handleLocationChange(e)}>
-                    <MenuItem value={''}>Any</MenuItem>
-                    <MenuItem value={"UTA"}>UTA</MenuItem>
-                </Select>
-            </FormControl>
-        )
+            props.location('');
+        }
+            
     }
 
     return(
@@ -60,7 +51,7 @@ export const FilterDropDown: React.FC<FilterDropDownComponentProps> = (props) =>
                         <MenuItem value={"Location"}>Location</MenuItem>
                     </Select>
                 </FormControl>
-                {locationForm ? <LocationForm /> : null}
+                {locationForm ? <LocationFilterDropDown location={(e:string) => handleLocationChange(e)}/> : null}
             </Box>
         </div>
     )

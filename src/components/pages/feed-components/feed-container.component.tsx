@@ -71,10 +71,10 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
     const size = 10;
     let filteredQuestions: Question[] = [];
 
-    // useEffect(() => {
-    //     load(view, 0, questionType, location);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [questionType, location]);
+    useEffect(() => {
+        load(view, 0, questionType, location);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [questionType, location]);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue);
