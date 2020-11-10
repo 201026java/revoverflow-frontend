@@ -1,6 +1,9 @@
 /**
  * @file Contains and manages the questions and answer boxes populated into the feed
- * @author Keith Salzman 
+ * @author Keith Salzman
+ * 
+ * @Additions Added the ability to incorporate Question Type and location filtering when viewing the feed
+ * @author Soksivateara Eng
  */
 
 //TODO:Refresh the list of questions everytime you change the filter so some sort of useEffect to call Load again but has to know the view
@@ -87,12 +90,10 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
     const handleQuestionTypeChange = (e: string) => {
         setQuestionType(e);
     }
-    console.log(questionType);
 
     const handleLocationChange = (e: string) => {
         setLocation(e);
     }
-    console.log(location);
 
     /**
      * Populates the feed with answers or questions according to the particular view and page input. 

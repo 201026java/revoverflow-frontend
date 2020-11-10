@@ -1,3 +1,7 @@
+/**
+ * @file Handles a drop down menu for location filtering
+ * @author Soksivateara Eng
+ */
 import { FormControl, InputLabel, makeStyles, MenuItem, Select } from '@material-ui/core';
 import React, { useState } from 'react';
 

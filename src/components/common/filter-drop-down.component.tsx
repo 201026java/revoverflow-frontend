@@ -1,3 +1,7 @@
+/**
+ * @file Handles a drop down menu for filtering 
+ * @author Soksivateara Eng
+ */
 import { Box, FormControl, InputLabel, makeStyles, MenuItem, Select } from '@material-ui/core';
 import React, { useState } from 'react';
 import { LocationFilterDropDown } from './location-filter-drop-down.component';

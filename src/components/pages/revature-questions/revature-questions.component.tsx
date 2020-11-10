@@ -1,3 +1,8 @@
+/**
+ * @file Shows all questions that are under the revature filter
+ * @author Soksivateara Eng
+ */
+
 import React, { useEffect, useState } from 'react';
 import { Container, createMuiTheme, ThemeProvider, Box, makeStyles} from '@material-ui/core';
 import FeedBoxComponent from '../feed-components/feed-box.component';
