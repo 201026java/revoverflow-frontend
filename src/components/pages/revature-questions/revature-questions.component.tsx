@@ -54,12 +54,13 @@ export const RevatureQuestions: React.FC<RevatureComponentProps> = (props) => {
     const [view, setView] = useState('recent');
     const [questionType] = useState('Revature');
     const [location] = useState('');
+    const userId = 0;
     const size = 10;
 
-    // useEffect(() => {
-    //     load(view, 0, questionType, location);
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
+    useEffect(() => {
+        load(view, 0, questionType, location);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handlePageChange = (event: React.ChangeEvent<unknown>, value: number) => {
         load(view, value - 1, questionType, location);
@@ -69,7 +70,7 @@ export const RevatureQuestions: React.FC<RevatureComponentProps> = (props) => {
         let retrievedPageable: any;
         let tab: any;
 
-        retrievedPageable = await questionRemote.getAllFilteredQuestions(size, page, questionType, location);
+        retrievedPageable = await questionRemote.getAllFilteredQuestions(userId, size, page, questionType, location);
         tab = 0;
         setView(view);
         if (retrievedPageable.numberOfElements === 0) {

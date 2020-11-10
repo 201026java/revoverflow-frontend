@@ -69,7 +69,8 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
     const [value, setValue] = React.useState(props.storeTab);
     const [questionType, setQuestionType] = useState('');
     const [location, setLocation] = useState('');
-    const userId = (+JSON.parse(JSON.stringify(localStorage.getItem('userId'))));
+    //const userId = (+JSON.parse(JSON.stringify(localStorage.getItem('userId'))));
+    const userId = 0;
     const admin = (localStorage.getItem("admin"));
     const size = 10;
     let filteredQuestions: Question[] = [];
@@ -128,7 +129,7 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
         }
         else{
             if (view === 'recent') {
-                retrievedPageable = await questionRemote.getAllFilteredQuestions(size, page, questionType, location);
+                retrievedPageable = await questionRemote.getAllFilteredQuestions(userId, size, page, questionType, location);
                 tab = 0;
                 setView(view);
                 if (retrievedPageable.numberOfElements === 0) {
@@ -139,7 +140,7 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
                 tab = 1;
                 setView(view)
             } else if (view === 'answer') {
-                retrievedPageable = await answerRemote.getFilteredAnswersByUserId(userId, size, page, questionType, location);
+                retrievedPageable = await answerRemote.getFilteredAnswers(userId, size, page, questionType, location);
                 tab = 2;
                 setView(view)
             } else if (view === 'confirm') {
@@ -191,7 +192,7 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
                     </ThemeProvider>
                 </Box>
                 <Box>
-                    <FilterDropDown questionType={(e:string) => handleLocationChange(e)} location={(e:string) => handleQuestionTypeChange(e)}/>
+                    <FilterDropDown questionType={(e:string) => handleQuestionTypeChange(e)} location={(e:string) => handleLocationChange(e)}/>
                 </Box>
                 <ThemeProvider theme={theme} >
                     <Box justifyContent="center" display="flex" className={classes.boxExternal}>

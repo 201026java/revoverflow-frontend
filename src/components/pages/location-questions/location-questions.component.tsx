@@ -54,6 +54,7 @@ export const LocationQuestions: React.FC<FeedContainerComponentProps> = (props) 
     const [view, setView] = useState('recent');
     const [questionType] = useState('Location');
     const [location, setLocation] = useState('');
+    const userId = 0;
     const size = 10;
 
     useEffect(() => {
@@ -73,7 +74,7 @@ export const LocationQuestions: React.FC<FeedContainerComponentProps> = (props) 
         let retrievedPageable: any;
         let tab: any;
 
-        retrievedPageable = await questionRemote.getAllFilteredQuestions(size, page, questionType, location);
+        retrievedPageable = await questionRemote.getAllFilteredQuestions(userId, size, page, questionType, location);
         tab = 0;
         setView(view);
         if (retrievedPageable.numberOfElements === 0) {

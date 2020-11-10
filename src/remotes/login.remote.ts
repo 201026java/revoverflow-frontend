@@ -9,7 +9,7 @@ import { user } from '../models/user';
 
 
 export const checkLoginCredentials = async (login: Login) => {
-    const response = await internalAxios.post('/login', login)
+    const response = await internalAxios.post('/user', login)
     return response;
 }
 
