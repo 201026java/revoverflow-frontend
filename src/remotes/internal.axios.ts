@@ -9,9 +9,6 @@ const server = process.env.REACT_APP_API_URL ?? "http://localhost:8080";
 
 export const internalAxios = Axios.create({
     baseURL: server,
-    headers: {
-        'Content-Type': 'application/json'
-    },
 });
 
 export const authAxios = Axios.create({

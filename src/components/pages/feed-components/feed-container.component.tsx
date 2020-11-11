@@ -71,7 +71,8 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
     const [location, setLocation] = useState('');
     //const userId = (+JSON.parse(JSON.stringify(localStorage.getItem('userId'))));
     const userId = 0;
-    const admin = (localStorage.getItem("admin"));
+    //const admin = (localStorage.getItem("admin"));
+    const admin = 'true';
     const size = 10;
     let filteredQuestions: Question[] = [];
 
@@ -149,7 +150,9 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
                 setView(view)
             }
         }
+
         props.clickTab(retrievedPageable.content, tab, retrievedPageable.totalPages, retrievedPageable.number);
+        
     }
 
     if (props.storeQuestions.length === 0 && view === 'recent') {
@@ -169,6 +172,7 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
             })
         } else {
             return props.storeQuestions.map(question => {
+                console.log(question)
                 return (
                     <FeedBoxComponent key={question.id} question={question} questionContent={question.content} view={view} />
                 )

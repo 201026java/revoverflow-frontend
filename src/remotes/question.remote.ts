@@ -25,13 +25,18 @@ export const getAllQuestions = async (size: number, page: number) => {
     return response.data;
 }
 
+export const hello = async () => {
+    const response = await internalAxios.get<any>(`/question/hello`);
+    return response.data;
+}
+
 export const getQuestionsByUserId = async (id: number, size: number, page: number ) => {
     const response = await internalAxios.get<Question[]>(`/question/user/${id}?size=${size}&page=${page}`);
     return response.data;
 }
 
 export const getUnconfirmedQuestions = async (size: number, page: number) => {
-    const response = await internalAxios.get<Question[]>(`question/status/false?size=${size}&page=${page}`);
+    const response = await internalAxios.get<Question[]>(`/question/status/false?size=${size}&page=${page}`);
     return response.data;
 }
 
