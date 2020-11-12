@@ -104,7 +104,6 @@ export const RichTextEditorComponent: React.FC = () => {
         }
     }
 
-    //TODO: Send question type and location
     const saveQuestion = async () => {
         const contentState = editorState.getCurrentContent();
         const payload: any = {
@@ -112,7 +111,9 @@ export const RichTextEditorComponent: React.FC = () => {
             content: JSON.stringify(convertToRaw(contentState)),
             creationDate: new Date(),
             status: false,
-            userID: +JSON.parse(JSON.stringify(localStorage.getItem('userId')))
+            userID: +JSON.parse(JSON.stringify(localStorage.getItem('userId'))),
+            questionType: questionType,
+            location: location
         }
         await questionRemote.postQuestion(payload);
         history.push("/feed");
@@ -121,12 +122,10 @@ export const RichTextEditorComponent: React.FC = () => {
 
     const handleQuestionTypeChange = (e: string) => {
         setQuestionType(e);
-        console.log(questionType);
     }
 
     const handleLocationChange = (e: string) => {
         setLocation(e);
-        console.log(location);
     }
     
     //INLINE and BLOCK LEVEL styles, consists of these functions and an array of buttons to map to span button elements
@@ -261,7 +260,7 @@ export const RichTextEditorComponent: React.FC = () => {
                         </Box>
                     </Box>
                     <Box className={classes.dropDownBox}>
-                        <FilterDropDown questionType={(e:string) => handleLocationChange(e)} location={(e:string) => handleQuestionTypeChange(e)}/>
+                        <FilterDropDown questionType={(e:string) => handleQuestionTypeChange(e)} location={(e:string) => handleLocationChange(e)}/>
                     </Box>
                     <Box>
                         <Box justifyContent="center" display="flex" flexDirection="column">

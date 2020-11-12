@@ -5,6 +5,7 @@
 import { Box, FormControl, InputLabel, makeStyles, MenuItem, Select } from '@material-ui/core';
 import React, { useState } from 'react';
 import { LocationFilterDropDown } from './location-filter-drop-down.component';
+import { questionTypeList } from './questionTypeList';
 
 const useStyles = makeStyles({
     dropDown: {
@@ -44,15 +45,22 @@ export const FilterDropDown: React.FC<FilterDropDownComponentProps> = (props) =>
             
     }
 
+    const ShowquestionType = () => {
+        return questionTypeList.map(questionType => {
+            return(
+                <MenuItem key={questionType} value={questionType}>{questionType}</MenuItem>
+            )
+        })
+    }
+
     return(
         <div>
             <Box>
                 <FormControl className={classes.dropDown}>
                     <InputLabel id="question-type-label">Question Type</InputLabel>
                     <Select labelId="question-type-label" id="question-type" value={questionType} onChange={(e: any) => handleQuestionTypeChange(e)}>
-                        <MenuItem value={''}>Any</MenuItem>
-                        <MenuItem value={"Revature"}>Revature</MenuItem>
-                        <MenuItem value={"Location"}>Location</MenuItem>
+                        <MenuItem key={'Any'} value={''}>Any</MenuItem>
+                        {ShowquestionType()}
                     </Select>
                 </FormControl>
                 {locationForm ? <LocationFilterDropDown location={(e:string) => handleLocationChange(e)}/> : null}

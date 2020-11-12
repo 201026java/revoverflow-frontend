@@ -67,10 +67,7 @@ export const FeedBoxComponent: React.FC<FeedBoxComponentProps> = (props) => {
         history.push('/forum');
     }
 
-    //currently there is a problem with how the data is sent to client where it can not properly parse it
-    console.log(props.question.content)
     const questionContent = EditorState.createWithContent(convertFromRaw(JSON.parse(props.question.content)));
-    console.log(questionContent)
     const onChange = () => { };
 
     //!First box here contains answers not questions, so does its handler deal with answer not questions
@@ -91,8 +88,8 @@ export const FeedBoxComponent: React.FC<FeedBoxComponentProps> = (props) => {
                             <Box paddingLeft={2} paddingRight={2}>
                                 <h2>{props.question.title}</h2>
                                 <div>{<Editor editorState={questionContent} readOnly={true} onChange={onChange} />}</div>
-                                <h3>{props.question.userId}</h3>
-                                <p>{props.question.creationDate}</p>
+                                <h3>UserID: {props.question.userId}</h3>
+                                <p>Posted On: {props.question.creationDate}</p>
                             </Box>
                         </Box>
                     </Box>}

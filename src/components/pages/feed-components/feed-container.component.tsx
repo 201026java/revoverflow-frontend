@@ -69,6 +69,7 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
     const [value, setValue] = React.useState(props.storeTab);
     const [questionType, setQuestionType] = useState('');
     const [location, setLocation] = useState('');
+    //TODO: REMEMBER TO CHANGE THIS BACK WHEN LOGIN WORKS
     //const userId = (+JSON.parse(JSON.stringify(localStorage.getItem('userId'))));
     const userId = 0;
     //const admin = (localStorage.getItem("admin"));
@@ -79,7 +80,7 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
     useEffect(() => {
         load(view, 0, questionType, location);
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [questionType, location]);
+    }, [questionType, location, view]);
 
     const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
         setValue(newValue);
@@ -130,14 +131,14 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
         }
         else{
             if (view === 'recent') {
-                retrievedPageable = await questionRemote.getAllFilteredQuestions(userId, size, page, questionType, location);
+                retrievedPageable = await questionRemote.getAllFilteredQuestions(0, size, page, questionType, location);
                 tab = 0;
                 setView(view);
                 if (retrievedPageable.numberOfElements === 0) {
                     return;
                 }
             } else if (view === 'question') {
-                retrievedPageable = await questionRemote.getFilteredQuestionsByUserId(userId, size, page, questionType, location);
+                retrievedPageable = await questionRemote.getAllFilteredQuestions(userId, size, page, questionType, location);
                 tab = 1;
                 setView(view)
             } else if (view === 'answer') {
@@ -145,7 +146,7 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
                 tab = 2;
                 setView(view)
             } else if (view === 'confirm') {
-                retrievedPageable = await questionRemote.getFilteredUnconfirmedQuestions(size, page, questionType, location);
+                retrievedPageable = await questionRemote.getFilteredUnconfirmedQuestions(0, size, page, questionType, location);
                 tab = 3;
                 setView(view)
             }
@@ -172,7 +173,6 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
             })
         } else {
             return props.storeQuestions.map(question => {
-                console.log(question)
                 return (
                     <FeedBoxComponent key={question.id} question={question} questionContent={question.content} view={view} />
                 )

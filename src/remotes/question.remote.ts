@@ -25,11 +25,6 @@ export const getAllQuestions = async (size: number, page: number) => {
     return response.data;
 }
 
-export const hello = async () => {
-    const response = await internalAxios.get<any>(`/question/hello`);
-    return response.data;
-}
-
 export const getQuestionsByUserId = async (id: number, size: number, page: number ) => {
     const response = await internalAxios.get<Question[]>(`/question/user/${id}?size=${size}&page=${page}`);
     return response.data;
@@ -60,12 +55,7 @@ export const getAllFilteredQuestions = async (id: number, size: number, page: nu
     return response.data;
 }
 
-export const getFilteredQuestionsByUserId = async (id: number, size: number, page: number, questionType: string, location: string ) => {
-    const response = await internalAxios.get<Question[]>(`/question/user/${id}?size=${size}&page=${page}&questionType=${questionType}&location=${location}`);
-    return response.data;
-}
-
-export const getFilteredUnconfirmedQuestions = async (size: number, page: number, questionType: string, location: string) => {
-    const response = await internalAxios.get<Question[]>(`question/status/false?size=${size}&page=${page}&questionType=${questionType}&location=${location}`);
+export const getFilteredUnconfirmedQuestions = async (id: number, size: number, page: number, questionType: string, location: string) => {
+    const response = await internalAxios.get<Question[]>(`question/unconfirmed/filter?size=${size}&page=${page}&questionType=${questionType}&location=${location}&id=${id}`);
     return response.data;
 }
