@@ -1,0 +1,83 @@
+name: ECR/EKS
+on: push
+env:
+  ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
+  ECR_REPOSITORY: matt-oberlies-00000916-${{ secrets.APP_NAME }}
+  IMAGE_TAG: ${{ github.sha }}
+  KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+jobs:
+  build:
+    name: Build Image
+    runs-on: ubuntu-latest
+    steps:
+      # ---[ Configuring AWS credentials and Logging in to ECR ]---
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.ECR_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.ECR_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build the image
+        id: docker_build
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./roClient
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+  test:
+    name: download github repo to runner
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup test environment
+        uses: actions/setup-node@v1
+        with:
+          node-version: '14.15.0'
+          check-latest: true
+      - name: Downloads package to runner machine
+        uses: actions/checkout@v2
+      - name: Run NPM tests
+        run: |
+          # Changing directories works only within the scope of the current step
+          cd ./roClient 
+          npm ci
+          # npm run test
+  analyze:
+    name: Analyze Code Quality
+    needs: [test]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  deploy: 
+    # ---[ Use docker image from the build step and deploy on EKS ]---
+    needs: [build, analyze]
+    name: Deploy on EKS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.EKS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.EKS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Deploy to EKS
+        uses: Consensys/kubernetes-action@master
+        env:
+          KUBE_CONFIG_DATA: $KUBE_CONFIG_DATA
+        with:
+          args: set image deployment/ro-frontend-deployment frontend=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+      - name: Verify Deployment
+        uses: Consensys/kubernetes-action@master
+        env:
+          KUBE_CONFIG_DATA: $KUBE_CONFIG_DATA
+        with:
+          args: rollout status deployment/ro-frontend-deployment
