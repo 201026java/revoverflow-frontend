@@ -1,0 +1,45 @@
+version: '3.1'
+
+volumes:
+    #ro-client_data:
+        #driver: local
+    nginx_data:
+        driver: local
+
+services:
+    #node:
+        #image: 'node:14.15.0'
+        #build:
+            #context: .
+            #dockerfile: Dockerfile.prod
+    #nginx:
+        #image: 'nginx:1.18.0'
+        #build:
+            #context: .
+            #dockerfile: Dockerfile.prod
+        #volumes:
+            #- 'nginx_data:/usr/share/nginx/html'
+            #- 'nginx_data:/var/log/nginx'
+            #- 'nginx_data:/etc/nginx'
+        #ports:
+             #- '80:80'
+        #environment:
+             #- ALLOW_ANONYMOUS_LOGIN=true
+    revoverflow-frontend:
+        image: 'revoverflow-frontend:latest'
+        build:
+            context: .
+            dockerfile: Dockerfile.prod
+        volumes:
+            #- 'ro-client_data:/roClient'
+            #- 'ro-client_data:/roClient/node_modules'
+            #- 'ro-client_data:/roClient/build'
+            - 'nginx_data:/var/log/nginx'
+        ports:
+             - '30080:30080'
+        environment:
+             - ALLOW_ANONYMOUS_LOGIN=true
+        #depends_on:
+            #- node
+            #- nginx
+
