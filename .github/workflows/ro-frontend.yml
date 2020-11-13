@@ -37,7 +37,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: '12'
-          check-latest: true
+          #check-latest: true # Unexpected input(s) 'check-latest', valid inputs are ['always-auth', 'node-version', 'registry-url', 'scope', 'version']
       - name: Downloads package to runner machine
         uses: actions/checkout@v2
       - name: Run NPM tests
