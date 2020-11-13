@@ -349,7 +349,7 @@ export const NavbarComponent: React.FC = () => {
             </ListItem>
           ))}
           <Divider />
-          {["Revature Specific Questions"].map((text, index) => (
+          {["Revature Questions"].map((text, index) => (
             <ListItem
               onClick={() => {
                 history.push("/revature");
@@ -370,7 +370,7 @@ export const NavbarComponent: React.FC = () => {
             </ListItem>
           ))}
           <Divider />
-          {["Location Specific Questions"].map((text, index) => (
+          {["Location Questions"].map((text, index) => (
             <ListItem
               onClick={() => {
                 history.push("/location");

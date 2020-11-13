@@ -51,7 +51,9 @@ export interface ForumQuestionComponentProps {
 
 export const ForumQuestionComponent: React.FC<ForumQuestionComponentProps> = (props) => {
     const classes = useStyles();
-    const admin = (localStorage.getItem("admin"));
+    //TODO: ADD BACK IN WHEN LOGIN WORKS
+    // const admin = (localStorage.getItem("admin"));
+    const admin = 'true';
     const [answerFields, setAnswerFields] = useState(false);
 
     const confirmAnswer = async () => {
@@ -70,7 +72,9 @@ export const ForumQuestionComponent: React.FC<ForumQuestionComponentProps> = (pr
             creationDate: questionInfo.creationDate,
             editDate: null,
             status: true,
-            userID: +JSON.parse(JSON.stringify(localStorage.getItem('userId')))
+            userID: +JSON.parse(JSON.stringify(localStorage.getItem('userId'))),
+            questionType: questionInfo.questionType,
+            location: questionInfo.location,
         };
 
         try {

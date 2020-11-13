@@ -73,15 +73,8 @@ export const RevatureQuestions: React.FC<RevatureComponentProps> = (props) => {
         retrievedPageable = await questionRemote.getAllFilteredQuestions(userId, size, page, questionType, location);
         tab = 0;
         setView(view);
-        if (retrievedPageable.numberOfElements === 0) {
-            return;
-        }
 
         props.clickTab(retrievedPageable.content, tab, retrievedPageable.totalPages, retrievedPageable.number);
-    }
-
-    if (props.storeQuestions.length === 0 && view === 'recent') {
-        load("recent", 0, questionType, location);
     }
 
     const renderFeedBoxComponents = () => {
