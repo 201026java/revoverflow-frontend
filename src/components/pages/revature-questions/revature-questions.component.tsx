@@ -1,5 +1,5 @@
 /**
- * @file Shows all questions that are under the revature filter
+ * @file Shows all questions that are under the revature filter. Structure is similar to feed-container.component
  * @author Soksivateara Eng
  */
 

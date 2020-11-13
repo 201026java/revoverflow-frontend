@@ -15,6 +15,11 @@ const useStyles = makeStyles({
     }
 });
 
+/**
+ * Passing functions as props to send filters to the 
+ * parent component whatever that component maybe. 
+ * Mainly seen in the feed-container.component in the time being
+ */
 export interface FilterDropDownComponentProps {
     questionType: (e: string) => void;
     location: (e: string) => void;
@@ -25,16 +30,27 @@ export const FilterDropDown: React.FC<FilterDropDownComponentProps> = (props) =>
     const [questionType, setQuestionType] = useState('');
     const [locationForm, setLocationForm] = useState(false);
 
+/**
+ * Sets the component's questionType, sends the value to the parent,
+ * and changes the boolean value for the location form vibilitiy 
+ */
     const handleQuestionTypeChange = (e: any) => {
         setQuestionType(e.target.value);
         props.questionType(e.target.value);
         handleLocationForm(e.target.value);
     }
 
+/**
+ * Sends the location value to the parent
+ */
     const handleLocationChange = (e: string) => {
         props.location(e);
     }
 
+/**
+ * Conditionally renders location form and if set to 
+ * false then it will reset the value to an empty string
+ */
     const handleLocationForm = (e: any) => {
         if(e === 'Location')
             setLocationForm(true);
@@ -45,6 +61,9 @@ export const FilterDropDown: React.FC<FilterDropDownComponentProps> = (props) =>
             
     }
 
+/**
+ * maps a list of questionTypes to MenuItems and renders them
+ */
     const ShowquestionType = () => {
         return questionTypeList.map(questionType => {
             return(
@@ -53,6 +72,10 @@ export const FilterDropDown: React.FC<FilterDropDownComponentProps> = (props) =>
         })
     }
 
+/**
+ * The base filter is questionType while locationForm is abstracted out.
+ * Ideally any other filer dropdown menu will be abstracted out and conditionally rendered here.
+ */
     return(
         <div>
             <Box>

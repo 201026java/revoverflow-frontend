@@ -2,8 +2,8 @@
  * @file Contains and manages the questions and answer boxes populated into the feed
  * @author Keith Salzman
  * 
- * @Additions Added the ability to incorporate Question Type and location filtering when viewing the feed
  * @author Soksivateara Eng
+ * @Additions Added the ability to incorporate Question Type and location filtering when viewing the feed
  */
 
 //TODO:Refresh the list of questions everytime you change the filter so some sort of useEffect to call Load again but has to know the view
@@ -69,7 +69,9 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
     const [value, setValue] = React.useState(props.storeTab);
     const [questionType, setQuestionType] = useState('');
     const [location, setLocation] = useState('');
-    //TODO: REMEMBER TO CHANGE THIS BACK WHEN LOGIN WORKS
+    /**
+     * @todo REMEMBER TO CHANGE THIS BACK WHEN LOGIN WORKS
+     */
     //const userId = (+JSON.parse(JSON.stringify(localStorage.getItem('userId'))));
     const userId = 0;
     //const admin = (localStorage.getItem("admin"));
@@ -108,6 +110,10 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
         let tab: number = 0;
 
 
+        /**
+         * @case based on the tabs 
+         * @ifelse checks if a filter is active and will call a different remote 
+         */
         switch (view) {
             case 'recent':
                 if (questionType === '' && location === '') {

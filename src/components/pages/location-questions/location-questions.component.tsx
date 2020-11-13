@@ -1,5 +1,5 @@
 /**
- * @file Shows all questions that are under the location filter
+ * @file Shows all questions that are under the location filter. Structure is similar to feed-container.component
  * @author Soksivateara Eng
  */
 import React, { useEffect, useState } from 'react';

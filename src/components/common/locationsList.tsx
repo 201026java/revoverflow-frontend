@@ -1,3 +1,8 @@
+/**
+ * @file Has a list of states in the US
+ * @author Soksivateara Eng
+ */
+
 export const locationList = [
     'Alabama',
     'Alaska',

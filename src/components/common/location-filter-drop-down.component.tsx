@@ -12,6 +12,9 @@ const useStyles = makeStyles({
     }
 });
 
+/**
+ * Has a function to send location value to the parent
+ */
 export interface LocationFilterDropDownComponentProps {
     location: (e: string) => void;
 }
@@ -20,11 +23,17 @@ export const LocationFilterDropDown: React.FC<LocationFilterDropDownComponentPro
     const classes = useStyles();
     const [location, setLocation] = useState('');
 
+/**
+ * Sets location value in state and sends the value to the parent
+ */
     const handleLocationChange = (e: any) => {
         setLocation(e.target.value);
         props.location(e.target.value);
     }
 
+/**
+ * Maps a list of states in the US to MenuItems
+ */
     const showLocations = () => {
         return locationList.map(location => {
             return(

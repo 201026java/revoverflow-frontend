@@ -3,6 +3,10 @@
  * @author D. Jared Chase 
  * @author Milton Reyes
  * @author Jerry Pujals
+ * 
+ * @author Soksivateara Eng
+ * @Additions Changed payload to include questionType and location values
+ * Added the dropdown filter to set those values
  */
 
 import React from 'react';

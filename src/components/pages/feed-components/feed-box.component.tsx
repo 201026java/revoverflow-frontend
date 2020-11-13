@@ -1,6 +1,9 @@
 /**
  * @file Contains and manages questions and answer mapped into boxes within the feed container
  * @author Keith Salzman 
+ * 
+ * @author Sokivateara Eng
+ * @additions Added an additional style that shows that a question is confirmed and renders based on status
  */
 
 import React from 'react';

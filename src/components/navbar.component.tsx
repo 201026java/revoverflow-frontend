@@ -1,11 +1,12 @@
 /**
  * @file Manage the login component for the web application
  * @author Michel Charles <mcharl05@nyit.edu>
- */
-
-/**
+ *
  * @file Nanage the side menu component for the web application
  * @author Yurrian Pierre-Boyer
+ * 
+ * @Additions added the ability to navigate to the location and revature specific questions pages
+ * @author Soksivateara Eng
  */
 
 import React, { useState, useEffect } from "react";

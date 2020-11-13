@@ -1,6 +1,8 @@
 /**
-@author
-Jordon Hill
+ * @author Jordon Hill
+ * 
+ * @Additions added remotes for filtering
+ * @author Soksivateara Eng
 */
 
 import { internalAxios } from './internal.axios'
