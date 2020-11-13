@@ -29,7 +29,7 @@ const useStyles = makeStyles({
         marginBottom: 5,
         marginTop: 10,
         borderStyle: "solid",
-        borderColor: "#63f225",
+        borderColor: "#4CAF50",
         maxWidth: 1000,
         width: `calc(100% - ${drawerWidth}px)`
     },
