@@ -29,7 +29,7 @@ services:
         image: 'revoverflow-frontend:latest'
         build:
             context: .
-            dockerfile: Dockerfile.prod
+            dockerfile: Dockerfile
         volumes:
             #- 'ro-client_data:/roClient'
             #- 'ro-client_data:/roClient/node_modules'
