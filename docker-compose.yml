@@ -1,19 +1,19 @@
 version: '3.1'
 
+volumes:
+    nginx_data:
+        driver: local
+
 services:
-     revoverflow-frontend:
-         image: 'revoverflow-frontend:latest'
-         build:
-             context: .
-             dockerfile: Dockerfile
-         volumes:
-             - '.:/app'
-             - '/app/node_modules'
-             - '/app/build'
-             - '/usr/share/nginx/html'
-             - '/var/log/nginx'
-             - '/etc/nginx'
-         ports:
-             - '3000:80'
-         environment:
-             - ALLOW_ANONYMOUS_LOGIN=true
+    ro-frontend:
+        image: 'ro-frontend:latest'
+        build:
+            context: .
+            dockerfile: Dockerfile
+        volumes:
+            - 'nginx_data:/var/log/nginx'
+            - 'nginx_data:/etc/nginx'
+        ports:
+            - '30080:30080'
+        environment:
+            - ALLOW_ANONYMOUS_LOGIN=true
