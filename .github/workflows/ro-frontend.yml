@@ -25,27 +25,27 @@ jobs:
         id: docker_build
         run: |
           pwd
-          #mkdir -v ./roClient
-          #docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./roClient
-          #docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ./rss-client
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
   test:
-    name: download github repo to runner
+    name: Run NodeJS and npm tests
     runs-on: ubuntu-latest
     steps:
       - name: Setup test environment
         uses: actions/setup-node@v1
         with:
-          node-version: '14.15.0'
+          node-version: '12'
           check-latest: true
       - name: Downloads package to runner machine
         uses: actions/checkout@v2
       - name: Run NPM tests
         run: |
           pwd
-          # Changing directories works only within the scope of the current step
-          cd ./roClient 
           npm ci
-          # npm run test
+          npm run build --if-present
+          npm test
   analyze:
     name: Analyze Code Quality
     needs: [test]
@@ -78,3 +78,4 @@ jobs:
           aws configure set default.region us-east-1 --profile p3eks
           aws eks --region us-east-1 update-kubeconfig --profile p3eks --name matt-oberlies-00000916
           kubectl --namespace default set image deployment/ro-frontend-deployment frontend=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          kubectl --namespace default rollout status deploy/ro-frontend-deployment
