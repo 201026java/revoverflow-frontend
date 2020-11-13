@@ -10,7 +10,7 @@
 import React, { useEffect, useState } from 'react';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { Container, createMuiTheme, ThemeProvider, Box, Button, makeStyles} from '@material-ui/core';
+import { Container, createMuiTheme, ThemeProvider, Box, Button, makeStyles } from '@material-ui/core';
 import FeedBoxComponent from './feed-box.component';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import DynamicFeedOutlinedIcon from '@material-ui/icons/DynamicFeedOutlined';
@@ -105,55 +105,53 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
      */
     const load = async (view: string, page: number, questionType: string, location: string) => {
         let retrievedPageable: any;
-        let tab: any;
+        let tab: number = 0;
 
-        if(questionType === '' && location === '' ) {
-            if (view === 'recent') {
-                retrievedPageable = await questionRemote.getAllQuestions(size, page);
+
+        switch (view) {
+            case 'recent':
+                if (questionType === '' && location === '') {
+                    retrievedPageable = await questionRemote.getAllQuestions(size, page);
+                } else {
+                    retrievedPageable = await questionRemote.getAllFilteredQuestions(0, size, page, questionType, location)
+                        .then(page => {
+                            if (page.numberOfElements === 0) return;
+                        });
+                }
                 tab = 0;
                 setView(view);
-                if (retrievedPageable.numberOfElements === 0) {
-                    return;
+                break;
+            case 'question':
+                if (questionType === '' && location === '') {
+                    retrievedPageable = await questionRemote.getQuestionsByUserId(userId, size, page);
+                } else {
+                    retrievedPageable = await questionRemote.getAllFilteredQuestions(userId, size, page, questionType, location);
                 }
-            } else if (view === 'question') {
-                retrievedPageable = await questionRemote.getQuestionsByUserId(userId, size, page);
                 tab = 1;
                 setView(view)
-            } else if (view === 'answer') {
-                retrievedPageable = await answerRemote.getAnswersByUserId(userId, size, page);
-                tab = 2;
-                setView(view)
-            } else if (view === 'confirm') {
-                retrievedPageable = await questionRemote.getUnconfirmedQuestions(size, page);
-                tab = 3;
-                setView(view)
-            }
-        }
-        else{
-            if (view === 'recent') {
-                retrievedPageable = await questionRemote.getAllFilteredQuestions(0, size, page, questionType, location);
-                tab = 0;
-                setView(view);
-                if (retrievedPageable.numberOfElements === 0) {
-                    return;
+                break;
+            case 'answer':
+                if (questionType === '' && location === '') {
+                    retrievedPageable = await answerRemote.getAnswersByUserId(userId, size, page);
+                } else {
+                    retrievedPageable = await answerRemote.getFilteredAnswers(userId, size, page, questionType, location);
                 }
-            } else if (view === 'question') {
-                retrievedPageable = await questionRemote.getAllFilteredQuestions(userId, size, page, questionType, location);
-                tab = 1;
-                setView(view)
-            } else if (view === 'answer') {
-                retrievedPageable = await answerRemote.getFilteredAnswers(userId, size, page, questionType, location);
                 tab = 2;
                 setView(view)
-            } else if (view === 'confirm') {
-                retrievedPageable = await questionRemote.getFilteredUnconfirmedQuestions(0, size, page, questionType, location);
+                break;
+            case 'confirm':
+                if (questionType === '' && location === '') {
+                    retrievedPageable = await questionRemote.getUnconfirmedQuestions(size, page);
+                } else {
+                    retrievedPageable = await questionRemote.getFilteredUnconfirmedQuestions(0, size, page, questionType, location);
+                }
                 tab = 3;
                 setView(view)
-            }
+                break;
         }
 
         props.clickTab(retrievedPageable.content, tab, retrievedPageable.totalPages, retrievedPageable.number);
-        
+
     }
 
     if (props.storeQuestions.length === 0 && view === 'recent') {
@@ -196,7 +194,7 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
                     </ThemeProvider>
                 </Box>
                 <Box>
-                    <FilterDropDown questionType={(e:string) => handleQuestionTypeChange(e)} location={(e:string) => handleLocationChange(e)}/>
+                    <FilterDropDown questionType={(e: string) => handleQuestionTypeChange(e)} location={(e: string) => handleLocationChange(e)} />
                 </Box>
                 <ThemeProvider theme={theme} >
                     <Box justifyContent="center" display="flex" className={classes.boxExternal}>

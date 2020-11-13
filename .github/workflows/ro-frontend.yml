@@ -4,7 +4,6 @@ env:
   ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
   ECR_REPOSITORY: matt-oberlies-00000916-${{ secrets.APP_NAME }}
   IMAGE_TAG: ${{ github.sha }}
-  KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
 jobs:
   build:
     name: Build Image
@@ -59,7 +58,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  deploy: 
+  deploy:
     # ---[ Use docker image from the build step and deploy on EKS ]---
     needs: [build, analyze]
     name: Deploy on EKS
@@ -72,14 +71,9 @@ jobs:
           aws-secret-access-key: ${{ secrets.EKS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       - name: Deploy to EKS
-        uses: Consensys/kubernetes-action@master
-        env:
-          KUBE_CONFIG_DATA: $KUBE_CONFIG_DATA
-        with:
-          args: set image deployment/ro-frontend-deployment frontend=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-      - name: Verify Deployment
-        uses: Consensys/kubernetes-action@master
-        env:
-          KUBE_CONFIG_DATA: $KUBE_CONFIG_DATA
-        with:
-          args: rollout status deployment/ro-frontend-deployment
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.EKS_ACCESS_KEY_ID }} --profile p3eks
+          aws configure set aws_secret_access_key ${{ secrets.EKS_SECRET_ACCESS_KEY }} --profile p3eks
+          aws configure set default.region us-east-1 --profile p3eks
+          aws eks --region us-east-1 update-kubeconfig --profile p3eks --name matt-oberlies-00000916
+          kubectl --namespace default set image deployment/ro-frontend-deployment frontend=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
