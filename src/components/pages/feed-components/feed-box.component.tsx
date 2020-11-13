@@ -25,6 +25,14 @@ const useStyles = makeStyles({
         maxWidth: 1000,
         width: `calc(100% - ${drawerWidth}px)`
     },
+    boxInternalConfirmed: {
+        marginBottom: 5,
+        marginTop: 10,
+        borderStyle: "solid",
+        borderColor: "#63f225",
+        maxWidth: 1000,
+        width: `calc(100% - ${drawerWidth}px)`
+    },
     divInternal: {
         paddingTop: 20
     }
@@ -70,10 +78,17 @@ export const FeedBoxComponent: React.FC<FeedBoxComponentProps> = (props) => {
     const questionContent = EditorState.createWithContent(convertFromRaw(JSON.parse(props.question.content)));
     const onChange = () => { };
 
+    const boxOutlineSet = () => {
+        if(props.question.status)
+            return classes.boxInternalConfirmed
+        else
+            return classes.boxInternal
+    }
+
     //!First box here contains answers not questions, so does its handler deal with answer not questions
     return (
         <Box display="flex" justifyContent="center" >
-            <Card className={classes.boxInternal}>
+            <Card className={boxOutlineSet()}>
                 {props.question.questionId ?
                     <Box display="flex" justifyContent="center" onClick={() => handleRedirectA()}  >
                         <Box paddingLeft={2} paddingRight={2} >

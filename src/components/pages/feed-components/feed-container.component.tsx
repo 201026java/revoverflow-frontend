@@ -207,7 +207,7 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
                             <Tab icon={<QuestionAnswerIcon fontSize="large" />} label="MY ANSWERS" className={classes.boxInternal}
                                 onClick={(e) => load("answer", 0, questionType, location)} />
                             {admin === 'true' ? <Tab icon={<ConfirmationNumberOutlinedIcon fontSize="large" onClick={(e) => load("confirm", 0, questionType, location)} />}
-                                label="CONFIRM" className={classes.boxInternal} /> : ""}
+                                label="UNCONFIRMED" className={classes.boxInternal} /> : ""}
                         </Tabs>
                     </Box>
                     <div style={{ width: '100%' }}>
