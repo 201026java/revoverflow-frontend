@@ -152,8 +152,6 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
 
     }
 
-    }
-
     /**
      * Maps the questions or answers into feed boxes to be displayed within the feed container.
      */
