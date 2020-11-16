@@ -77,5 +77,5 @@ jobs:
           aws configure set aws_secret_access_key ${{ secrets.EKS_SECRET_ACCESS_KEY }} --profile p3eks
           aws configure set default.region us-east-1 --profile p3eks
           aws eks --region us-east-1 update-kubeconfig --profile p3eks --name matt-oberlies-00000916
-          kubectl --namespace default set image deployment/ro-frontend-deployment frontend=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          kubectl --namespace default rollout status deploy/ro-frontend-deployment
+          kubectl --namespace default set image deployment/ro-frontend frontend=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          kubectl --namespace default rollout status deploy/ro-frontend
