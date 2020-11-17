@@ -36,6 +36,8 @@ COPY --from=build /roClient/build /usr/share/nginx/html
 # next line if using react router
 COPY nginx /etc/nginx/conf.d/default.conf
 
+VOLUME /roClient/roClient-sonar
+VOLUME /var/log/nginx
 # port 80 HTTP
 EXPOSE 30080
 #STOPSIGNAL SIGTERM
