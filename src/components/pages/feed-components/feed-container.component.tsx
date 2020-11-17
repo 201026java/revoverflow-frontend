@@ -17,7 +17,6 @@ import DynamicFeedOutlinedIcon from '@material-ui/icons/DynamicFeedOutlined';
 import ConfirmationNumberOutlinedIcon from '@material-ui/icons/ConfirmationNumberOutlined';
 import Pagination from '@material-ui/lab/Pagination';
 import { BreadcrumbBarComponent } from '../breadcrumb-bar.component';
-import { useHistory } from 'react-router';
 import * as answerRemote from '../../../remotes/answer.remote';
 import * as questionRemote from '../../../remotes/question.remote';
 import { Question } from '../../../models/question';
