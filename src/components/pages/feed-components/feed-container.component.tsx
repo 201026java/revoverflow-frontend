@@ -10,7 +10,7 @@
 import React, { useEffect, useState } from 'react';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import { Container, createMuiTheme, ThemeProvider, Box, Button, makeStyles } from '@material-ui/core';
+import { Container, createMuiTheme, ThemeProvider, Box, makeStyles } from '@material-ui/core';
 import FeedBoxComponent from './feed-box.component';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 import DynamicFeedOutlinedIcon from '@material-ui/icons/DynamicFeedOutlined';
@@ -176,10 +176,6 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
                 )
             })
         }
-    }
-
-    const handleRedirect = () => {
-        history.push('/question');
     }
 
     return (
