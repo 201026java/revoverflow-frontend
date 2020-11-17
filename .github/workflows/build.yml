@@ -45,8 +45,17 @@ jobs:
         run: |
           pwd
           npm ci
+<<<<<<< HEAD
           npm run build --if-present
           npm test
+=======
+          npm run test --coverage --coverageDirectory=coverage --watchAll
+      - name: Upload Code Coverage Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: code-coverage-report
+          path: coverage/
+>>>>>>> 45b0136... Update build.yml
   analyze:
     name: Analyze Code Quality
     needs: [test]
