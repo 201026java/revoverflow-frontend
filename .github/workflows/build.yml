@@ -67,6 +67,7 @@ jobs:
   deploy:
     # ---[ Use docker image from the build step and deploy on EKS ]---
     #needs: [build, analyze]
+    needs: [build]
     name: Deploy on EKS
     runs-on: ubuntu-latest
     steps:
