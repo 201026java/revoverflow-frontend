@@ -29,7 +29,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --coverage --coverageDirectory=coverage --watchAll",
+    "test": "react-scripts test --coverage --coverageDirectory=coverage --watchAll=false",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
