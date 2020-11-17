@@ -10,7 +10,6 @@ import "./login.component.css";
 import * as loginRemote from '../../../remotes/login.remote'
 import { useHistory } from 'react-router';
 import { useState } from 'react';
-import { authAxios } from "../../../remotes/internal.axios";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -25,7 +24,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const LoginComponent: React.FC = () => {
   const classes = useStyles();
-
   const history = useHistory();
   const [inputEmail, setInputEmail] = useState('');
   const [inputPassword, setInputPassword] = useState('');
@@ -34,7 +32,6 @@ export const LoginComponent: React.FC = () => {
 
   let response: any;
   const setInformation = async () => {
-    authAxios.defaults.headers["Authorization"]= response.headers.authorization
     setInputEmail('');
     setInputPassword('');
     localStorage.setItem('accessToken', response.data.jwt);

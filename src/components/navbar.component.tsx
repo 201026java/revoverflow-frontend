@@ -228,7 +228,6 @@ export const NavbarComponent: React.FC = () => {
   });
 
   const displayPoints = async () => {
-
     if (gettingPoints) {
       try {
       const response = await loginRemote.getUserById(+JSON.parse(JSON.stringify(localStorage.getItem('userId'))));

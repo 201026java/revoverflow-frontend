@@ -15,7 +15,9 @@ describe('quesiton.reducer', () => {
                         content: "content99",
                         creationDate: new Date("2020-01-01"),
                         status: false,
-                        userID: 99
+                        userID: 99,
+                        questionType: "Revature",
+                        location: "Texas"
                     },
                     questions: [],
                     tab: 0,
@@ -35,7 +37,9 @@ describe('quesiton.reducer', () => {
                     content: "content",
                     creationDate: new Date(),
                     status: false,
-                    userID: 1
+                    userID: 1,
+                    questionType: "Revature",
+                    location: "Texas"
                 },
                 storeTab: 0,
                 storePageCount: 0,
@@ -68,7 +72,9 @@ describe('quesiton.reducer', () => {
                         content: "content99",
                         creationDate: new Date("2020-01-01"),
                         status: false,
-                        userID: 99
+                        userID: 99,
+                        questionType: "Revature",
+                        location: "Texas"
                     },
                     questions: [],
                     tab: 0,
@@ -87,7 +93,9 @@ describe('quesiton.reducer', () => {
                     content: "content",
                     creationDate: new Date(),
                     status: false,
-                    userID: 1
+                    userID: 1,
+                    questionType: "Revature",
+                    location: "Texas"
                 },
                 storeTab: 0,
                 storePageCount: 0,
@@ -103,7 +111,9 @@ describe('quesiton.reducer', () => {
                 content: "content99",
                 creationDate: new Date("2020-01-01"),
                 status: false,
-                userID: 99
+                userID: 99,
+                questionType: "Revature",
+                location: "Texas"
             }]);
         });
     });

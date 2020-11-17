@@ -67,13 +67,8 @@ export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (pr
     const [value, setValue] = React.useState(props.storeTab);
     const [questionType, setQuestionType] = useState('');
     const [location, setLocation] = useState('');
-    /**
-     * @todo REMEMBER TO CHANGE THIS BACK WHEN LOGIN WORKS
-     */
-    //const userId = (+JSON.parse(JSON.stringify(localStorage.getItem('userId'))));
-    const userId = 0;
-    //const admin = (localStorage.getItem("admin"));
-    const admin = 'true';
+    const userId = (+JSON.parse(JSON.stringify(localStorage.getItem('userId'))));
+    const admin = (localStorage.getItem("admin"));
     const size = 10;
     let filteredQuestions: Question[] = [];
 
