@@ -64,7 +64,6 @@ export interface FeedContainerComponentProps {
 
 export const FeedContainerComponent: React.FC<FeedContainerComponentProps> = (props) => {
     const classes = useStyles();
-    const history = useHistory();
     const [view, setView] = useState<'question' | 'answer' | 'confirm' | 'recent'>('recent');
     const [value, setValue] = React.useState(props.storeTab);
     const [questionType, setQuestionType] = useState('');
