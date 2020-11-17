@@ -6,9 +6,14 @@ FROM node:14.15.0 as build
 
 # build location
 WORKDIR /roClient
+<<<<<<< HEAD
 #RUN mkdir -v /roClient && cd /roClient
 ENV PATH /roClient/node_modules/.bin:$PATH
 
+=======
+
+ENV PATH /roClient/node_modules/.bin:$PATH
+>>>>>>> adc3409... Changes to dockerfile, docker compose, kubernetes deployment. Removed unnecessary files. Removed node.yml. Renamed ro-frontend.tml to build.yml. Changes to build.yml
 
 COPY package.json ./
 COPY package-lock.json ./
