@@ -1,5 +1,6 @@
 {
   "name": "project-3-front-end",
+  "homepage": "http://a05ca03ed94f848dfa2d6ef975d395ff-284278107.us-east-1.elb.amazonaws.com/revoverflow",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

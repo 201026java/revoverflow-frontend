@@ -10,7 +10,7 @@ import { RichTextEditorComponent } from './pages/forum-components/rich-text-edit
 
 export const MainComponent: React.FC = () => {
     return <div id="main-component">
-        <BrowserRouter>
+        <BrowserRouter basename="/revoverflow">
             <main>
                 <Switch>
                     <Route exact path="/">
