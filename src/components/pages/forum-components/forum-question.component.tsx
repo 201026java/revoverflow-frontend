@@ -51,9 +51,7 @@ export interface ForumQuestionComponentProps {
 
 export const ForumQuestionComponent: React.FC<ForumQuestionComponentProps> = (props) => {
     const classes = useStyles();
-    //TODO: ADD BACK IN WHEN LOGIN WORKS
-    // const admin = (localStorage.getItem("admin"));
-    const admin = 'true';
+    const admin = (localStorage.getItem("admin"));
     const [answerFields, setAnswerFields] = useState(false);
 
     const confirmAnswer = async () => {

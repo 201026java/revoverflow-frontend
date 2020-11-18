@@ -14,6 +14,6 @@ export const checkLoginCredentials = async (login: Login) => {
 }
 
 export const getUserById = async (id: number) => {
-    const response = await authAxios.get<user>(`/user/${id}`);
+    const response = await authAxios.get<user>(`/user/user/${id}`);
     return response;
 }
